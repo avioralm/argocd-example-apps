@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: minio
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 14.8.4
+    helm:
+      valueFiles:
+        - $values/helm-values/minio/values.yaml
+  sources:
+    - chart: minio
+      repoURL: https://charts.bitnami.com/bitnami
+      targetRevision: 14.8.4
+      helm:
+        valueFiles:
+          - $values/helm-values/minio/values.yaml
+    - repoURL: https://github.com/YOUR_USERNAME/YOUR_REPO.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: minio
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m

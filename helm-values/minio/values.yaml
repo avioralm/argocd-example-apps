@@ -1,0 +1,63 @@
+mode: distributed
+
+auth:
+  rootUser: "admin"
+  rootPassword: "changeme-production-password"
+
+statefulset:
+  replicaCount: 4
+
+persistence:
+  enabled: true
+  storageClass: "local-path"
+  size: 100Gi
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 2Gi
+    cpu: 1000m
+
+service:
+  type: ClusterIP
+  port: 9000
+
+consoleService:
+  type: ClusterIP
+  port: 9001
+
+ingress:
+  enabled: false
+
+metrics:
+  serviceMonitor:
+    enabled: false
+
+defaultBuckets: "kafka,data,backups"
+
+provisioning:
+  enabled: true
+  policies:
+    - name: readonly
+      statements:
+        - resources:
+            - "arn:aws:s3:::kafka/*"
+          actions:
+            - "s3:GetObject"
+            - "s3:ListBucket"
+    - name: readwrite
+      statements:
+        - resources:
+            - "arn:aws:s3:::data/*"
+          actions:
+            - "s3:*"
+  users:
+    - username: kafka-user
+      password: changeme-kafka-password
+      disabled: false
+      policies:
+        - readwrite
+        - consoleAdmin
+      setPolicies: false

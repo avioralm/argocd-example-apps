@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flaresolverr
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - chart: flaresolverr
+      repoURL: https://brandan-schmitz.github.io/helm-charts
+      targetRevision: 1.0.1
+      helm:
+        valueFiles:
+          - $values/helm-values/flaresolverr/values.yaml
+    - repoURL: https://github.com/YOUR_USERNAME/YOUR_REPO.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: flaresolverr
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
