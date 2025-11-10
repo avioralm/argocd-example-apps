@@ -1,38 +1,31 @@
-replicaCount: 1
-
-image:
-  repository: ghcr.io/flaresolverr/flaresolverr
-  pullPolicy: IfNotPresent
-  tag: latest
-
-env:
-  - name: LOG_LEVEL
-    value: "info"
-  - name: LOG_HTML
-    value: "false"
-  - name: CAPTCHA_SOLVER
-    value: "none"
-  - name: TZ
-    value: "UTC"
+controllers:
+  main:
+    containers:
+      main:
+        image:
+          repository: ghcr.io/flaresolverr/flaresolverr
+          tag: latest
+          pullPolicy: IfNotPresent
+        env:
+          LOG_LEVEL: info
+          LOG_HTML: false
+          CAPTCHA_SOLVER: none
+          TZ: UTC
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+          limits:
+            memory: 1Gi
+            cpu: 1000m
 
 service:
-  type: LoadBalancer
-  port: 8191
-
-resources:
-  requests:
-    memory: 256Mi
-    cpu: 100m
-  limits:
-    memory: 1Gi
-    cpu: 1000m
+  main:
+    type: LoadBalancer
+    ports:
+      http:
+        port: 8191
 
 ingress:
-  enabled: false
-
-securityContext:
-  runAsNonRoot: false
-  runAsUser: 0
-
-podSecurityContext:
-  fsGroup: 0
+  main:
+    enabled: false
