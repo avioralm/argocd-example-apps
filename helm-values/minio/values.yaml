@@ -9,8 +9,8 @@ statefulset:
 
 persistence:
   enabled: true
-  storageClass: "local-path"
-  size: 100Gi
+  storageClass: "hostpath"
+  size: 10Gi
 
 resources:
   requests:
