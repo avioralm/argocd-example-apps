@@ -35,10 +35,12 @@ metrics:
   serviceMonitor:
     enabled: false
 
-defaultBuckets: "kafka,data,backups"
-
 provisioning:
   enabled: true
+  buckets:
+    - name: kafka
+    - name: data
+    - name: backups
   policies:
     - name: readonly
       statements:
