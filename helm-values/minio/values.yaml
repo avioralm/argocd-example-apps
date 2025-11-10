@@ -21,11 +21,11 @@ resources:
     cpu: 1000m
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 9000
 
 consoleService:
-  type: ClusterIP
+  type: LoadBalancer
   port: 9001
 
 ingress:

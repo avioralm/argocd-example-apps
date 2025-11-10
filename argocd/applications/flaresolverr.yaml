@@ -12,7 +12,7 @@ spec:
       helm:
         valueFiles:
           - $values/helm-values/flaresolverr/values.yaml
-    - repoURL: https://github.com/YOUR_USERNAME/YOUR_REPO.git
+    - repoURL: https://github.com/avioralm/argocd-example-apps.git
       targetRevision: HEAD
       ref: values
   destination:

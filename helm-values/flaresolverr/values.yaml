@@ -16,7 +16,7 @@ env:
     value: "UTC"
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8191
 
 resources:

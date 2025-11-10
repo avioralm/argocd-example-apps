@@ -21,7 +21,7 @@ resources:
     cpu: 500m
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8080
 
 ingress:
