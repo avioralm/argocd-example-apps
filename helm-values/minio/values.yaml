@@ -5,7 +5,7 @@ mode: standalone
 
 # Root credentials
 rootUser: "admin"
-rootPassword: "changeme-production-password"
+rootPassword: "84b\h{TQ<9d6"
 
 # Single replica for standalone mode
 replicas: 1
