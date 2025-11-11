@@ -6,8 +6,8 @@ metadata:
   labels:
     strimzi.io/cluster: kafka-cluster
 spec:
-  # Production: 3 nodes with high availability
-  replicas: 3
+  # High-performance: 5 nodes for better throughput
+  replicas: 5
   roles:
     - controller
     - broker
@@ -16,7 +16,7 @@ spec:
     volumes:
       - id: 0
         type: persistent-claim
-        size: 50Gi  # Increased for better data retention
+        size: 50Gi  # Increased from 10Gi
         deleteClaim: false
         class: local-path
 ---
@@ -42,7 +42,7 @@ spec:
         type: internal
         tls: true
     config:
-      # Production replication settings
+      # High replication for production
       offsets.topic.replication.factor: 3
       transaction.state.log.replication.factor: 3
       transaction.state.log.min.isr: 2
@@ -51,20 +51,23 @@ spec:
       # Performance tuning
       auto.create.topics.enable: true
       num.network.threads: 8
-      num.io.threads: 8
+      num.io.threads: 16
       socket.send.buffer.bytes: 102400
       socket.receive.buffer.bytes: 102400
-      log.retention.hours: 168  # 7 days
+      socket.request.max.bytes: 104857600
+      log.retention.hours: 168
       log.segment.bytes: 1073741824
-      num.partitions: 6
+      log.retention.check.interval.ms: 300000
+      num.partitions: 12
+      num.replica.fetchers: 4
     resources:
-      # Optimized for powerful server (48 cores, 62GB RAM)
+      # High-performance: more resources per pod
       requests:
-        memory: 2Gi
-        cpu: 1000m  # 1 full core per pod
+        memory: 4Gi   # Increased from 1Gi
+        cpu: 2000m    # Increased from 250m (2 full cores)
       limits:
-        memory: 4Gi
-        cpu: 2000m  # 2 full cores per pod
+        memory: 8Gi   # Increased from 2Gi
+        cpu: 4000m    # Increased from 1000m (4 full cores)
     metricsConfig:
       type: jmxPrometheusExporter
       valueFrom:

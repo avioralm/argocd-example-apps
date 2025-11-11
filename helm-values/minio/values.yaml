@@ -10,20 +10,20 @@ rootPassword: "changeme-production-password"
 # Single replica for standalone mode
 replicas: 1
 
-# Persistence configuration
+# Persistence configuration - sized for 50-150GB data
 persistence:
   enabled: true
   storageClass: "local-path"
-  size: 10Gi
+  size: 200Gi  # Increased from 10Gi to handle 150GB + overhead
 
-# Resource limits
+# Resource limits - optimized for your server
 resources:
   requests:
-    memory: 256Mi
-    cpu: 100m
+    memory: 1Gi    # Increased from 256Mi
+    cpu: 500m      # Increased from 100m
   limits:
-    memory: 512Mi
-    cpu: 500m
+    memory: 2Gi    # Increased from 512Mi
+    cpu: 1000m     # Increased from 500m
 
 # Service configuration
 service:
