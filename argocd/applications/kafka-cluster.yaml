@@ -9,6 +9,10 @@ spec:
     repoURL: https://github.com/avioralm/argocd-example-apps.git
     targetRevision: HEAD
     path: helm-values/kafka
+    directory:
+      exclude: |
+        kafka-cluster-dev.yaml
+        README.md
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
