@@ -4,8 +4,7 @@ auth:
   rootUser: "admin"
   rootPassword: "changeme-production-password"
 
-statefulset:
-  replicaCount: 1
+replicas: 1
 
 persistence:
   enabled: true
@@ -22,11 +21,9 @@ resources:
 
 service:
   type: LoadBalancer
-  port: 9000
-
-consoleService:
-  type: LoadBalancer
-  port: 9001
+  ports:
+    api: 9000
+    console: 9001
 
 ingress:
   enabled: false
@@ -36,30 +33,4 @@ metrics:
     enabled: false
 
 provisioning:
-  enabled: true
-  buckets:
-    - name: kafka
-    - name: data
-    - name: backups
-  policies:
-    - name: readonly
-      statements:
-        - resources:
-            - "arn:aws:s3:::kafka/*"
-          actions:
-            - "s3:GetObject"
-            - "s3:ListBucket"
-    - name: readwrite
-      statements:
-        - resources:
-            - "arn:aws:s3:::data/*"
-          actions:
-            - "s3:*"
-  users:
-    - username: kafka-user
-      password: changeme-kafka-password
-      disabled: false
-      policies:
-        - readwrite
-        - consoleAdmin
-      setPolicies: false
+  enabled: false
