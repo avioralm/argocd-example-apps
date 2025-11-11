@@ -1,16 +1,22 @@
+# Official MinIO Helm Chart Configuration
+# https://github.com/minio/minio/tree/master/helm/minio
+
 mode: standalone
 
-auth:
-  rootUser: "admin"
-  rootPassword: "changeme-production-password"
+# Root credentials
+rootUser: "admin"
+rootPassword: "changeme-production-password"
 
+# Single replica for standalone mode
 replicas: 1
 
+# Persistence configuration
 persistence:
   enabled: true
   storageClass: "local-path"
   size: 10Gi
 
+# Resource limits
 resources:
   requests:
     memory: 256Mi
@@ -19,18 +25,32 @@ resources:
     memory: 512Mi
     cpu: 500m
 
+# Service configuration
 service:
   type: LoadBalancer
-  ports:
-    api: 9000
-    console: 9001
+  port: 9000
 
+# Console service
+consoleService:
+  type: LoadBalancer
+  port: 9001
+
+# Ingress disabled
 ingress:
   enabled: false
+  consoleIngress: false
 
+# Metrics disabled
 metrics:
   serviceMonitor:
     enabled: false
 
-provisioning:
-  enabled: false
+# Deployment configuration
+DeploymentUpdate:
+  type: Recreate
+  maxUnavailable: 0
+
+# No buckets provisioning (keep it simple)
+buckets: []
+users: []
+policies: []
