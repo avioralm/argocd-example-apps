@@ -48,10 +48,10 @@ spec:
       # Replication settings - adjust based on number of replicas
       # For 1 replica: set all to 1
       # For 3+ replicas: use 3, 3, 2, 3, 2 for production HA
-      offsets.topic.replication.factor: 3
-      transaction.state.log.replication.factor: 3
+      offsets.topic.replication.factor: 2
+      transaction.state.log.replication.factor: 2
       transaction.state.log.min.isr: 2
-      default.replication.factor: 3
+      default.replication.factor: 2
       min.insync.replicas: 2
       # Auto-create topics with proper replication
       auto.create.topics.enable: true
@@ -72,19 +72,19 @@ spec:
     topicOperator:
       resources:
         requests:
-          memory: 256Mi
-          cpu: 100m
+          memory: 128Mi  # Reduced from 256Mi
+          cpu: 50m       # Reduced from 100m
         limits:
-          memory: 512Mi
-          cpu: 500m
+          memory: 256Mi  # Reduced from 512Mi
+          cpu: 250m      # Reduced from 500m
     userOperator:
       resources:
         requests:
-          memory: 256Mi
-          cpu: 100m
+          memory: 128Mi  # Reduced from 256Mi
+          cpu: 50m       # Reduced from 100m
         limits:
-          memory: 512Mi
-          cpu: 500m
+          memory: 256Mi  # Reduced from 512Mi
+          cpu: 250m      # Reduced from 500m
 ---
 apiVersion: v1
 kind: ConfigMap
