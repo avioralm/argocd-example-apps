@@ -1,11 +1,11 @@
-mode: distributed
+mode: standalone
 
 auth:
   rootUser: "admin"
   rootPassword: "changeme-production-password"
 
 statefulset:
-  replicaCount: 4
+  replicaCount: 1
 
 persistence:
   enabled: true
@@ -14,11 +14,11 @@ persistence:
 
 resources:
   requests:
-    memory: 512Mi
-    cpu: 250m
+    memory: 256Mi
+    cpu: 100m
   limits:
-    memory: 2Gi
-    cpu: 1000m
+    memory: 512Mi
+    cpu: 500m
 
 service:
   type: LoadBalancer
