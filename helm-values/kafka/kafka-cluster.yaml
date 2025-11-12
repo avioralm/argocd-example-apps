@@ -45,16 +45,6 @@ spec:
         port: 9094
         type: loadbalancer
         tls: false
-        configuration:
-          bootstrap:
-            loadBalancerIP: ""  # Leave empty for auto-assignment
-          brokers:
-            - broker: 0
-              loadBalancerIP: ""
-            - broker: 1
-              loadBalancerIP: ""
-            - broker: 2
-              loadBalancerIP: ""
 
     config:
       # Production replication settings

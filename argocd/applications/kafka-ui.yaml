@@ -18,15 +18,4 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: kafka
-  syncPolicy:
-    automated:
-      prune: false  # Prevent automatic deletion of resources
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-    retry:
-      limit: 5
-      backoff:
-        duration: 5s
-        factor: 2
-        maxDuration: 3m
+  syncPolicy: {}
