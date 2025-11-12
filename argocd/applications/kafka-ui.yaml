@@ -20,7 +20,7 @@ spec:
     namespace: kafka
   syncPolicy:
     automated:
-      prune: true
+      prune: false  # Prevent automatic deletion of resources
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
